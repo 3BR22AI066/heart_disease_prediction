@@ -7,6 +7,7 @@ User Registration & Login: Secure account creation and personalized user access.
 User Authentication: Firebase integration for reliable and secure user verification.
 Data Input: Accepts input via file upload (CSV/Excel) or manual data entry.
 Heart Disease Prediction: Utilizes a trained machine learning model to analyze health metrics and predict risk levels.
+Chatbot:using gemini api it gives the response.
 ##  Non-Functional Features
 Performance: Optimized to provide predictions within seconds.
 Security: Implements HTTPS, Firebase Authentication, and encrypted storage for user data.
@@ -17,7 +18,7 @@ Response Time: Provides feedback and results in under 3 seconds.
 
 HTML, CSS, JavaScript (for dynamic, responsive UI).
 Visualization: Chart.js, Plotly (for displaying results).
-Backend:
+## Backend:
 
 Python with Flask (for server-side logic).
 Firebase (for authentication and database).
@@ -25,7 +26,7 @@ Machine Learning:
 
 Random Forest model (trained on biomedical data).
 Libraries: Scikit-learn, Pandas, Numpy.
-Database:
+## Database:
 
 Firebase Firestore or Firebase Realtime Database (for storing user data).
 
