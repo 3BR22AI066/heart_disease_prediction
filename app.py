@@ -32,7 +32,7 @@ initialize_app(cred)
 heart_disease_model = joblib.load('C:/Users/katta/OneDrive/Desktop/Heart-Disease-Prediction-Deployment-master/random_forest_model.joblib')
 
 # Configure the API key for Google Generative AI
-genai.configure(api_key="AIzaSyDFWROl53UyEXTWPa3s0ZJCgB3u28yZfls")
+genai.configure(api_key="//Gemini_api")
 
 # Define the model for Google Generative AI
 model = genai.GenerativeModel("gemini-1.5-flash")
