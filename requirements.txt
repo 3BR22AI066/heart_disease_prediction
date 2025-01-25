@@ -1,0 +1,6 @@
+Flask==2.3.2
+google-generativeai
+python-dotenv
+langchain
+PyPDF2
+chromadb

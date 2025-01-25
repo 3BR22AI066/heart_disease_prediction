@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Basic styles for the body and layout */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1d1d1d;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Chat header */
+        h1 {
+            font-size: 2rem;
+            color: #f1f1f1;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Text area for input */
+        textarea {
+            width: 90%;
+            padding: 12px;
+            font-size: 1.2rem;
+            border: 1px solid #444;
+            border-radius: 8px;
+            resize: none;
+            margin-bottom: 20px;
+            min-height: 100px;
+            background-color: #3d3d3d;
+            color: #f1f1f1;
+        }
+
+        /* Submit button */
+        button {
+            background-color: #007bff;
+            color: white;
+            font-size: 1.2rem;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Container for the chat responses */
+        #response {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .user-message {
+            background-color: #333;
+            color: white;
+            align-self: flex-start;
+        }
+
+        .bot-message {
+            background-color: #333;
+            color: #e0e0e0;
+            align-self: flex-end;
+        }
+
+        /* Chatbot icon style */
+        #chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        #chatbot-icon a {
+            display: block;
+        }
+
+        #chatbot-icon img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <h1>Chat with AI</h1>
+        <form id="chat-form" method="POST">
+            <textarea name="input" id="input" placeholder="Ask me anything..." required></textarea><br>
+            <button type="submit">Send</button>
+        </form>
+
+        <div id="response"></div>
+    </div>
+
+    <div id="chatbot-icon">
+        <a href="{{ url_for('chat') }}"> <!-- Assuming the route is named 'chat' -->
+            <img src="{{ url_for('static', filename='chatbot-icon.webp') }}" alt="Chatbot">
+        </a>
+    </div>
+
+    <script>
+        // Handle the form submission
+        $('#chat-form').on('submit', function(event) {
+            event.preventDefault();  // Prevent default form submission
+
+            const inputText = $('#input').val();  // Get input text
+
+            // Append the user's message to the response container
+            $('#response').append(`<div class="message user-message">${inputText}</div>`);
+
+            // Clear the input field
+            $('#input').val('');
+
+            // Send the user's message to the backend
+            $.post('/chat', { input: inputText }, function(data) {
+                // Append the bot's response to the response container
+                if (data.response) {
+                    $('#response').append(`<div class="message bot-message">${data.response}</div>`);
+                } else if (data.error) {
+                    $('#response').append(`<div class="message bot-message error">${data.error}</div>`);
+                }
+
+                // Auto-scroll to the bottom of the chat
+                $('#response').scrollTop($('#response')[0].scrollHeight);
+            }).fail(function() {
+                $('#response').append(`<div class="message bot-message error">Error occurred while processing your request.</div>`);
+
+                // Auto-scroll to the bottom of the chat
+                $('#response').scrollTop($('#response')[0].scrollHeight);
+            });
+        });
+    </script>
+
+</body>
+</html>

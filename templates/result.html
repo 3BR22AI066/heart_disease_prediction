@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart Disease Predictor</title>
+  <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f7f6;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Header */
+    .container {
+      background-color: #161616;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      border-bottom: 5px solid #283039;
+    }
+
+    .container-heading {
+      font-size: 3em;
+      font-family: 'Pacifico', cursive;
+      margin: 0;
+    }
+
+    .heading_font {
+      font-weight: 600;
+      font-size: 1.2em;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .description p {
+      font-size: 1.2em;
+      font-weight: 400;
+      margin-top: 10px;
+    }
+
+    /* Table for Input Data */
+    .user-data {
+      margin: 40px auto;
+      width: 80%;
+      max-width: 1000px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    h3 {
+      text-align: center;
+      color: #333;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+      font-size: 1.1em;
+    }
+
+    th {
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    .centered {
+      text-align: center;
+    }
+
+    /* Result Styling */
+    .results {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .danger {
+      color: #f44336;
+    }
+
+    .safe {
+      color: #4caf50;
+    }
+
+    /* Diet Plan Styling */
+    .diet-plan {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .diet-plan h2 {
+      font-size: 1.8em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .diet-plan ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .diet-plan li {
+      font-size: 1.2em;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .footer-description {
+      font-size: 1.2em;
+      font-weight: 300;
+    }
+
+    /* Responsive Styling */
+    @media screen and (max-width: 768px) {
+      .container-heading {
+        font-size: 2.2em;
+      }
+
+      .user-data {
+        width: 95%;
+      }
+
+      .diet-plan h2 {
+        font-size: 1.6em;
+      }
+
+      .footer-description {
+        font-size: 1em;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Website Title -->
+  <div class="container">
+    <h1 class='container-heading'><span class="heading_font">Heart Disease Predictor</span></h1>
+    <div class='description'>
+      <p>A Machine Learning Web Application that predicts chances of having heart disease or not</p>
+      <p>"Your health is an investment, not an expense. Take control of your future today!"</p>
+    </div>
+  </div>
+
+  <!-- User Data Table -->
+  <div class="user-data">
+    <h3>Input Data</h3>
+    <table>
+      <tr>
+        <th>Age</th>
+        <td class="centered">{{ data[0] }}</td>
+      </tr>
+      <tr>
+        <th>Sex</th>
+        <td class="centered">{{ data[1] }}</td>
+      </tr>
+      <tr>
+        <th>Chest Pain Type</th>
+        <td class="centered">{{ data[2] }}</td>
+      </tr>
+      <tr>
+        <th>Resting Blood Pressure</th>
+        <td class="centered">{{ data[3] }}</td>
+      </tr>
+      <tr>
+        <th>Cholesterol</th>
+        <td class="centered">{{ data[4] }}</td>
+      </tr>
+      <tr>
+        <th>Fasting Blood Sugar</th>
+        <td class="centered">{{ data[5] }}</td>
+      </tr>
+      <tr>
+        <th>Resting Electrocardiographic Results</th>
+        <td class="centered">{{ data[6] }}</td>
+      </tr>
+      <tr>
+        <th>Maximum Heart Rate Achieved</th>
+        <td class="centered">{{ data[7] }}</td>
+      </tr>
+      <tr>
+        <th>Exercise Induced Angina</th>
+        <td class="centered">{{ data[8] }}</td>
+      </tr>
+      <tr>
+        <th>Old Peak</th>
+        <td class="centered">{{ data[9] }}</td>
+      </tr>
+      <tr>
+        <th>Slope of Peak Exercise ST Segment</th>
+        <td class="centered">{{ data[10] }}</td>
+      </tr>
+      <tr>
+        <th>Number of Major Vessels Colored by Fluoroscopy</th>
+        <td class="centered">{{ data[11] }}</td>
+      </tr>
+      <tr>
+        <th>Thalassemia</th>
+        <td class="centered">{{ data[12] }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Result -->
+  <div class="results">
+    {% if prediction == 1 %}
+      <h1>Prediction: <span class="danger">Oops! You have chances of heart disease.</span></h1>
+    {% elif prediction == 0 %}
+      <h1>Prediction: <span class="safe">Great! You DON'T have chances of heart disease.</span></h1>
+    {% endif %}
+  </div>
+
+  <!-- Diet Plan -->
+  <div class="diet-plan">
+    {% if diet_plan %}
+      <h2>{{ diet_plan.title }}</h2>
+      <ul>
+        {% for item in diet_plan.details %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <h2>No Diet Plan Available</h2>
+      <p>Consult a healthcare provider for personalized advice.</p>
+    {% endif %}
+  </div>
+
+ <!-- Chatbot Icon -->
+<div id="chatbot-icon">
+  <a href="{{ url_for('chat') }}">
+      <img src="{{ url_for('static', filename='chatbot-icon.webp') }}" alt="Chatbot" style="width: 50px; height: 50px;">
+  </a>
+</div>
+
+  <!-- Footer -->
+  <div class='footer'>
+    <p class='footer-description'>Made with ❤️ for heart health awareness.</p>
+  </div>
+
+</body>
+</html>
